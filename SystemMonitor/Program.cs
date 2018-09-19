@@ -147,14 +147,16 @@ class Info
 
     public static string DrawProgressBar(int percent, int length = 50)
     {
+        char emptyChar = '-';
+        char filledChar = '|';
         if (percent == -1)
         {
             int fillerLen = (length - "Not Available".Length) / 2;
             StringBuilder sb = new StringBuilder();
             sb.Append('[');
-            sb.Append(' ', fillerLen);
+            sb.Append(emptyChar, fillerLen);
             sb.Append("Not Available");
-            sb.Append(' ', length - (fillerLen + "Not Available".Length));
+            sb.Append(emptyChar, length - (fillerLen + "Not Available".Length));
             sb.Append(']');
             return sb.ToString();
         }
@@ -163,8 +165,8 @@ class Info
             int filledCount = (length * percent) / 100;
             StringBuilder sb = new StringBuilder();
             sb.Append('[');
-            sb.Append('|', filledCount);
-            sb.Append(' ', length - filledCount);
+            sb.Append(filledChar, filledCount);
+            sb.Append(emptyChar, length - filledCount);
             sb.Append(']');
             return sb.ToString();
         }
