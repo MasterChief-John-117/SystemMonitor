@@ -37,16 +37,16 @@ class Info
 
     public static string GetDriveInfo()
     {
-        StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         DriveInfo[] drives = DriveInfo.GetDrives();
         foreach (DriveInfo drive in drives)
         {
-            stringBuilder.Append(DrawProgressBar(Convert.ToInt32(100 * (drive.TotalSize - drive.AvailableFreeSpace) / drive.TotalSize)) + "  ");
+            sb.Append(DrawProgressBar(Convert.ToInt32(100 * (drive.TotalSize - drive.AvailableFreeSpace) / drive.TotalSize)) + "  ");
 
-            stringBuilder.AppendLine($"{drive.Name}{drive.VolumeLabel}: {BytesToString(drive.AvailableFreeSpace)} of {BytesToString(drive.TotalSize)} free ({BytesToString(drive.TotalSize - drive.TotalFreeSpace)} used)     ");
+            sb.AppendLine($"{drive.Name}{drive.VolumeLabel}: {BytesToString(drive.AvailableFreeSpace)} of {BytesToString(drive.TotalSize)} free ({BytesToString(drive.TotalSize - drive.TotalFreeSpace)} used)     ");
         }
 
-        return stringBuilder.ToString();
+        return sb.ToString();
     }
 
     public static string GetCpuUsage()
