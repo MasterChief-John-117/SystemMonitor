@@ -45,7 +45,7 @@ class Info
             Console.WriteLine(GetDriveInfo());
 
             Console.WriteLine(GetHeaderString("Network"));
-            GetNetInfo();
+            Console.WriteLine(GetNetInfo());
             System.Threading.Thread.Sleep(1000);
         }
     }
@@ -98,16 +98,19 @@ class Info
         return sb.ToString();
     }
 
-    public static void GetNetInfo()
+    public static string GetNetInfo()
     {
+        StringBuilder sb = new StringBuilder();
         int netRec = (int)pcreceived.NextValue();
         int netSent = (int) pcsent.NextValue();
 
         netRecMax = Math.Max(netRec, netRecMax);
         netSendMax = Math.Max(netSent, netSendMax);
 
-        Console.WriteLine($"{DrawProgressBar((netRec * 100)/netRecMax)}  Download Speed: {BytesToString(netRec)}/s   ");
-        Console.WriteLine($"{DrawProgressBar((netSent * 100) / netSendMax)}  Upload Speed: {BytesToString(netSent)}/s   ");
+        sb.AppendLine($"{DrawProgressBar((netRec * 100)/netRecMax)}  Download Speed: {BytesToString(netRec)}/s   ");
+        sb.AppendLine($"{DrawProgressBar((netSent * 100) / netSendMax)}  Upload Speed: {BytesToString(netSent)}/s   ");
+
+        return sb.ToString();
 
     }
 
