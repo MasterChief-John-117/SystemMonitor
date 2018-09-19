@@ -70,9 +70,9 @@ class Info
 
         StringBuilder sb = new StringBuilder();
 
-        sb.AppendLine($"{DrawProgressBar(Convert.ToInt32(cpuUsage))}  Usage: {cpuUsage}%  ");
-        sb.AppendLine($"{DrawProgressBar(-1)}  Processes: {Process.GetProcesses().Length}");
-        sb.AppendLine($"{DrawProgressBar(-1)}  Threads: {Process.GetProcesses().Sum(p => p.Threads.Count)}");
+        sb.AppendLine($"{DrawProgressBar(Convert.ToInt32(cpuUsage))}  Usage: {cpuUsage}%     ");
+        sb.AppendLine($"{DrawProgressBar(-1)}  Processes: {Process.GetProcesses().Length}     ");
+        sb.AppendLine($"{DrawProgressBar(-1)}  Threads: {Process.GetProcesses().Sum(p => p.Threads.Count)}     ");
 
         return sb.ToString();
     }
@@ -89,10 +89,10 @@ class Info
             TotalVisibleMemorySize = Double.Parse(mo["TotalVisibleMemorySize"].ToString()) * 1024
         }).FirstOrDefault();
 
-        sb.AppendLine($"{DrawProgressBar(-1)}  Total Memory: {BytesToDetailedString(memoryValues.TotalVisibleMemorySize)}");
+        sb.AppendLine($"{DrawProgressBar(-1)}  Total Memory: {BytesToDetailedString(memoryValues.TotalVisibleMemorySize)}     ");
         sb.Append($"{DrawProgressBar((int)Math.Round(((memoryValues.TotalVisibleMemorySize - memoryValues.FreePhysicalMemory) / memoryValues.TotalVisibleMemorySize) * 100, 2))}  ");
         sb.Append($"In Use: {BytesToDetailedString(memoryValues.TotalVisibleMemorySize - memoryValues.FreePhysicalMemory)}");
-        sb.Append($" ({Math.Round(((memoryValues.TotalVisibleMemorySize - memoryValues.FreePhysicalMemory) / memoryValues.TotalVisibleMemorySize) * 100, 2)}%)    ");
+        sb.Append($" ({Math.Round(((memoryValues.TotalVisibleMemorySize - memoryValues.FreePhysicalMemory) / memoryValues.TotalVisibleMemorySize) * 100, 2)}%)     ");
         sb.AppendLine();
 
         return sb.ToString();
@@ -107,8 +107,8 @@ class Info
         netRecMax = Math.Max(netRec, netRecMax);
         netSendMax = Math.Max(netSent, netSendMax);
 
-        sb.AppendLine($"{DrawProgressBar((netRec * 100)/netRecMax)}  Download Speed: {BytesToString(netRec)}/s   ");
-        sb.AppendLine($"{DrawProgressBar((netSent * 100) / netSendMax)}  Upload Speed: {BytesToString(netSent)}/s   ");
+        sb.AppendLine($"{DrawProgressBar((netRec * 100)/netRecMax)}  Download Speed: {BytesToString(netRec)}/s     ");
+        sb.AppendLine($"{DrawProgressBar((netSent * 100) / netSendMax)}  Upload Speed: {BytesToString(netSent)}/s     ");
 
         return sb.ToString();
 
