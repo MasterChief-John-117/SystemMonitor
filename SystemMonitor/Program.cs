@@ -7,12 +7,15 @@ using System.Text;
 
 class Info
 {
+    // Global Processor Usage
     static PerformanceCounter cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
+
+    // Global Network Stats
     static PerformanceCounterCategory pcg = new PerformanceCounterCategory("Network Interface");
     static string instance = pcg.GetInstanceNames()[0];
     static PerformanceCounter pcsent = new PerformanceCounter("Network Interface", "Bytes Sent/sec", instance);
     static PerformanceCounter pcreceived = new PerformanceCounter("Network Interface", "Bytes Received/sec", instance);
-
+    // Networking Maximums for the status bards
     static int netSendMax = 1;
     static int netRecMax = 1;
 
@@ -23,6 +26,7 @@ class Info
         Console.CursorVisible = false;
         while (true)
         {
+            // Make sure the console meets minimum size requirements
             Console.SetWindowSize(Math.Max(128, Console.WindowWidth), Math.Max(36, Console.WindowHeight));
 
             // If the number of rows has changed, clear the console to prevent visual artifacts
@@ -43,13 +47,16 @@ class Info
             Console.WriteLine(GetMemoryUsage());
             Console.WriteLine(GetHeaderString("Drives"));
             Console.WriteLine(GetDriveInfo());
-
             Console.WriteLine(GetHeaderString("Network"));
             Console.WriteLine(GetNetInfo());
             System.Threading.Thread.Sleep(1000);
         }
     }
 
+    /// <summary>
+    /// Get the storage usage info of all the drives in the machine
+    /// </summary>
+    /// <returns></returns>
     public static string GetDriveInfo()
     {
         StringBuilder sb = new StringBuilder();
@@ -64,6 +71,10 @@ class Info
         return sb.ToString();
     }
 
+    /// <summary>
+    /// Get CPU usage, process, and thread counts
+    /// </summary>
+    /// <returns></returns>
     public static string GetCpuUsage()
     {
         var cpuUsage = Math.Round(cpuCounter.NextValue(), 1);
@@ -77,6 +88,10 @@ class Info
         return sb.ToString();
     }
 
+    /// <summary>
+    /// Get total and used memory
+    /// </summary>
+    /// <returns></returns>
     public static string GetMemoryUsage()
     {
         StringBuilder sb = new StringBuilder();
@@ -98,6 +113,10 @@ class Info
         return sb.ToString();
     }
 
+    /// <summary>
+    /// Get upload/download speeds
+    /// </summary>
+    /// <returns></returns>
     public static string GetNetInfo()
     {
         StringBuilder sb = new StringBuilder();
@@ -114,6 +133,11 @@ class Info
 
     }
 
+    /// <summary>
+    /// Take a number of bytes and return it with the approprite unit and one decimal point
+    /// </summary>
+    /// <param name="bytes">The number of bytes</param>
+    /// <returns></returns>
     public static string BytesToString(double bytes)
     {
         string[] sizes = { "B", "KB", "MB", "GB", "TB" };
@@ -131,6 +155,11 @@ class Info
         return result;
     }
 
+    /// <summary>
+    /// Take a number of bytes and return it with the approprite unit and two decimal points
+    /// </summary>
+    /// <param name="bytes">The number of bytes</param>
+    /// <returns></returns>
     public static string BytesToDetailedString(double bytes)
     {
         string[] sizes = { "B", "KB", "MB", "GB", "TB" };
@@ -148,6 +177,11 @@ class Info
         return result;
     }
 
+    /// <summary>
+    /// Gets a "#" enclosed header 
+    /// </summary>
+    /// <param name="HeaderName">The string to be enclosed by #</param>
+    /// <returns>A 3 line box of # with the HeaderName inside</returns>
     public static string GetHeaderString(string HeaderName)
     {
         StringBuilder sb = new StringBuilder();
@@ -163,6 +197,12 @@ class Info
         return sb.ToString();
     }
 
+    /// <summary>
+    /// Draw a progress bar given a percent complete and a total length
+    /// </summary>
+    /// <param name="percent">The percent completion of the task</param>
+    /// <param name="length">The number of characters inside the progress bar</param>
+    /// <returns>A one-line ASCII progress bar</returns>
     public static string DrawProgressBar(int percent, int length = 50)
     {
         char emptyChar = '-';
