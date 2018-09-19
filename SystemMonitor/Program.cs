@@ -18,6 +18,8 @@ class Info
     // Networking Maximums for the status bards
     static int netSendMax = 1;
     static int netRecMax = 1;
+    static double netSendTotal = 0;
+    static double netRecTotal = 0;
 
     static int prevCursorBottom = 0;
 
@@ -126,8 +128,11 @@ class Info
         netRecMax = Math.Max(netRec, netRecMax);
         netSendMax = Math.Max(netSent, netSendMax);
 
-        sb.AppendLine($"{DrawProgressBar((netRec * 100)/netRecMax)}  Download Speed: {BytesToString(netRec)}/s     ");
-        sb.AppendLine($"{DrawProgressBar((netSent * 100) / netSendMax)}  Upload Speed: {BytesToString(netSent)}/s     ");
+        netRecTotal += (double)netRec;
+        netSendTotal += (double)netSent;
+
+        sb.AppendLine($"{DrawProgressBar((netRec * 100)/netRecMax)}  Download Speed: {BytesToString(netRec)}/s ({BytesToString(netRecTotal)} total)    ");
+        sb.AppendLine($"{DrawProgressBar((netSent * 100) / netSendMax)}  Upload Speed: {BytesToString(netSent)}/s ({BytesToString(netSendTotal)} total)    ");
 
         return sb.ToString();
 
