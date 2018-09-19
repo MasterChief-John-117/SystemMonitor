@@ -16,12 +16,27 @@ class Info
     static int netSendMax = 1;
     static int netRecMax = 1;
 
+    static int prevCursorBottom = 0;
+
     public static void Main()
     {
+        Console.CursorVisible = false;
         while (true)
         {
             Console.SetWindowSize(Math.Max(128, Console.WindowWidth), Math.Max(36, Console.WindowHeight));
-            Console.SetCursorPosition(0, 0);
+
+            // If the number of rows has changed, clear the console to prevent visual artifacts
+            if (prevCursorBottom != Console.CursorTop)
+            {
+                prevCursorBottom = Console.CursorTop;
+                Console.Clear();
+            }
+            // Otherwise just redraw the screen
+            else
+            {
+                Console.SetCursorPosition(0, 0);
+            }
+
             Console.WriteLine(GetHeaderString("Processor"));
             Console.WriteLine(GetCpuUsage());
             Console.WriteLine(GetHeaderString("Memory"));
